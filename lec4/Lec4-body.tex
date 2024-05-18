@@ -1,0 +1,69 @@
+% !TEX root = Lec4.tex
+
+\section{Functions and Relations}
+\subsection{Constructing Relations}
+We will talk about ordered pairs, relations and set up functions today. We would like some way to represent an ordered pair of sets by use of some third set that encodes the pair in an unambiguous, precise manner.
+\begin{rem}[Discussion of Ordered Pairs]
+We want a construction that takes two sets, $a, b$ and returns a third set $\langle a, b\rangle$ such that for $a, b, c, d$
+\[\langle a, b\rangle = \langle c, d\rangle \implies a = c \wedge b = d\]
+\end{rem}
+\begin{defn}[Ordered Pair]
+\[\langle a, b\rangle = \{\{a\}, \{a, b\}\}\]
+\end{defn}
+\begin{prop}[Correctness of the construction]
+\[\langle a, b\rangle = \langle c, d\rangle \implies a = c \wedge b = d\]
+\end{prop}
+\begin{proof}
+Case 1: $\{a\} = \{c\}$ and $\{a, b\} = \{c, d\}$.\\
+Thus $a = c$, so $\{a, b\} = \{a, d\}$, implying $b = d$.\\\\
+Case 2: $\{a\} = \{c, d\}$ and $\{a, b\} = \{c\}$\\
+The first equality gives us that $a = c = d$. Plugging this into the second equality gives us $\{a, b\} = \{c, b\} = \{c\}$, implying $a = b = c = d$\\\\
+Case 3: $\{a\} = \{c\}$ and $\{b, d\} = \{c\}$. The second equality implies that $b = d = c$, while the first implies $a = c$, which in total means that $a = b = c = d$.
+\end{proof}
+\begin{prop}
+\[\forall A \forall a [a \in A \implies \{a\} \in \P(A)]\]
+\end{prop}
+\begin{proof}
+\[\{a\} \in \P(A) \iff \{a\} \subseteq A \iff \forall [t \in \{a\} \implies t \in A] \iff a \in A\]
+\end{proof}
+\begin{rem}[Unofficial Cartesian Products]
+Once we have ordered pairs, now we would like to construct Cartesian Products, as these are fundamental objects in mathematics.
+\[A \times B \text{ ``='' } \{t: \exists a \exists b, a \in A, b \in B, t = \langle a, b\rangle\}\]
+We use the quotation marks, since this is an unrestricted comprehension. To properly use the comprehension (subset) axiom, we need to find which set the elements of $A \times B$ might lie in.\\
+If $t = \langle a, b\rangle = \{\{a\}, \{a, b\}\}$, where $a \in A$ and $b \in B$.\\
+Where does $\{a\}$ belong to? $\{a\} \in \mathcal{P}(A)$. We know $\{a, b\} \in \P(A \cup B)$. Similarly, since $\{a\} \subseteq A \cup B$, we know that $\{a\} \in \P(A \cup B)$. Since the elements of $t$ are elements of $\P(A \cup B)$, we have that $t \in \P(\P(A \cup B))$. 
+\[\forall t [[\exists a \exists b, a \in A, b \in B, t = \la a, b\ra] \implies t \in \P\P(A \cup B)]\]
+\end{rem}
+\begin{defn}[Cartesian Products]
+\[A \times B := \{t \in \P\P(A \cup B): \exists a \exists b, a \in A, b \in B, t = \la a, b\ra\}\]
+\end{defn}
+\begin{rem}[Examples of Relations]
+In this class, a relation will typically be a binary relation. Some examples include inequality($a \neq b, a < b$), existence ($a \in b$), subset $a \subset B$, equality $a = b$. In this class, many of these will be relations, since relations must be sets and we cannot have sets the size of the whole universe.
+\end{rem}
+\begin{defn}[Relation] A relation $R$ is a set such that $\forall t \in R$, there exists sets $a$ and $b$ such that $t = \la a, b\ra$.\\
+\[\text{``}aRb\text{''} \implies \la a, b\ra \in R\]
+\end{defn}
+\begin{defn}[Domain]
+\[a \in \dom R \iff \exists b \la a, b\ra \in R\]
+\[\dom R := \{a \in \bigcup \bigcup R: \exists b, \la a, b\ra \in R\}\]
+\end{defn}
+\begin{defn}[Range]
+\[b \in \ran R \iff \exists a \la a, b\ra \in R\]
+\[\ran R := \{b \in \bigcup \bigcup R: \exists a, \la a, b\ra \in R\}\]
+\end{defn}
+\begin{defn}[Field]
+\[\fld R := \dom R \cup \ran R\]
+\end{defn}
+\begin{prop}
+$R$ is a relation $\iff$ $R \subseteq \dom R \times \ran R$
+\end{prop}
+\begin{proof}
+$\implies$: $\forall t \in R$,$t \in \dom R \times \ran R$\\
+$\impliedby$: Suppose $\forall t \in R$, $t \in \dom R \times \ran R$. Then $\forall t \in R \exists a \in \dom R, \exists b \in \ran R$ such that $t = \la a, b\ra$. Thus every element of $R$ is an ordered pair, so $R$ is a relation.
+\end{proof}
+\begin{defn}[Function]
+A function $F$ is a relation such that \[\forall a \forall b \forall c [\la a, b\ra \in F \wedge \la a, c\ra \in F \implies b = c]\]
+\[F: X \to Y : \iff F \text{ is a function} \wedge \dom F = X \wedge \ran F \subseteq Y\]
+\end{defn}
+
+

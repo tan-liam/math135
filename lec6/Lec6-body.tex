@@ -1,0 +1,100 @@
+% !TEX root = Lec6.tex
+
+\section{Functions and the Axiom of Choice}
+\subsection{Functions}
+\begin{thm}[1-1 Functions]
+    Let $F: X \to Y$ be a function. Then TFAE
+    \begin{itemize}
+        \item F is one-to-one
+        \item $\exists g, g: Z \to X \wedge g \circ F = I_X$
+        \item $F^{-1}$ is a function and $F^{-1}\circ F = I_X$
+    \end{itemize}
+\end{thm}
+\begin{proof}
+We have shown 1 implies 3 in the previous lecture. 3 implies 2 is trivial. Let us prove
+2 implies 1.\\
+Supppose there exists $g: Z \to X$ such that $g \circ f = I_X$. Let $a, b \in \dom f = X$.
+Suppose $f(a) = f(b)$. Apply g to both sides, to get $g(f(a)) = a = b = g(f(b))$.
+\end{proof}
+\begin{defn}[Onto]
+A function $f: X \to Y$ is onto $Y$ if and only if $\ran f = Y$. Similarly,
+if $\exists g: Y \to X$ such that $f \circ g = I_Y$, then $f$ is onto $Y$.
+\end{defn}
+\begin{prop}
+Let $R$ be a relation and let $R^{-1}$ be its converse relation. Then 
+\[R \circ R^{-1} \supseteq I_{\ran R}\]
+\end{prop}
+\begin{proof}
+    Let $t \in I_{\ran R}$. Then $\exists a \in \ran R$ such that $t = \la a, a\ra$.
+    Thus $\exists b$ such that $\la b, a\ra \in R$. This implies $\la a, b\ra \in R^{-1}$. 
+    From that we can conclude that $\la a, a\ra \in R \circ R^{-1}$
+\end{proof}
+\begin{prop}
+Let $f: X \to Y$ be a one-to-one function. Then 
+\[\dom (f \circ f^{-1}) = \ran f\]
+\end{prop}
+\begin{proof}
+    We have already shown $I_{\ran f} \subseteq f \circ f^{-1}$.
+    Let $b \in \ran f$. Then $\exists a$ such that $\la a, b\ra \in f$, so $\la b, a\ra \in f^{-1}$.
+    Thus $\la b, b\ra \in f \circ f^{-1}$. Thus $b \in \dom (f \circ f^{-1})$.\\
+    Let $b \in \dom (f \circ f^{-1})$. Then $\exists c \exists a$ such that $\la b, c\ra \in f^{-1}$ and
+    $\la c, a\ra \in f$. Then we know that $\la c, b\ra \in f$. Thus $b \in \ran f$
+\end{proof}
+\begin{prop}
+If $f: X \to Y$ is a one-to-one function, then $f \circ f^{-1}$ a function and $f \circ f^{-1} = I_{\ran f}$.
+\end{prop}
+\begin{proof}
+We showed that $f \circ f^{-1} \supseteq I_{\ran f}$ and that $\dom(f \circ f^{-1}) = \ran f$. Let $t \in f \circ f^{-1}$.
+Then $\exists a \in \ran f$ and $\exists a, c$ such that $t = \la a, c\ra$ and $\la a, b\ra \in f^{-1}$ and $\la b, c\ra \in f$.
+It follows that $\la b, a\ra \in f$. Since $f$ is a function, we have that $a = c$, so $t = \la a, a\ra \in I_{\ran f}$.
+\end{proof}
+\begin{ex}
+\[f: \C \to \C\]
+\[z \mapsto z^2\]
+Does there exists $g: \C \to \C$ such that $f \circ g = I_{\C}$? $f^{-1}$ is not a function.
+For every complex number $z$, we can write $z = re^{i\theta}$ for $r \geq 0$ and $0 \leq \theta \leq 2\pi$. 
+\[g(z) = \sqrt{r}e^{i\frac{\theta}{2}}\]
+\[f(g(z)) = (\sqrt{r}e^{i\frac{\theta}{2}})^2 = |r|e^{i\theta}\]
+\end{ex}
+\subsection{Intro to the Axiom of Choice}
+\begin{axiom}[Axiom of Choice]
+For every relation $R$, there exists a function $F$ such that $F \subseteq R$ and $\dom F = \dom R$.
+\end{axiom}
+\begin{rem}
+Start with the relation R. For each $a \in \dom R$.
+\[R \llb \{a\}\rrb = \{b : \la a, b\ra \in R\} \neq \emptyset\]
+"Define" $F(a) = b$ by choosing some $b \in R \llb \{a\}\rrb$.
+\end{rem}
+\begin{thm}[Axiom of Choice Implies Right Inverses]
+    $f: X \to Y$ is onto Y if and only if $\exists g: Y \to X$ such that $f \circ g = I_Y$
+\end{thm}
+   \begin{proof}
+   $\impliedby$ was completed earlier today.\\
+   $\implies$ By the axiom of choice there exists $g \subseteq f^{-1}$ a function with the same domain, Y.
+   $\ran g \subseteq \ran f^{-1} = \dom f = X$. Thus $g: Y \to X$ and $g \subseteq f^{-1}$. We conclude that
+   $\dom (f \circ g) = Y$. We know $f \circ g \subseteq f \circ f^{-1} \subseteq I_Y$.
+   If $t \in f \circ f^{-1}$, then $\exists a \exists b$ such that $\la a, b\ra = t \in f \circ f^{-1}$ and 
+   $\exists c$ such that $\la a, c\ra \in f^{-1}$ and $\la c, b\ra \in f$. Thus $a = b$ and $t = \la a, a\ra$
+   Since $\dom (f \circ g) = Y = \dom(I_Y)$ and $f \circ g \subseteq I_Y$, we have that 
+   \[f \circ g = I_Y\] 
+\end{proof}
+\begin{defn}[Functions from X to Y]
+\[\prescript{X}{}{Y} = \{f \in \P(X \times Y): f: X \to Y\} \]
+\end{defn}
+\begin{ex}
+Let $Y$ be any set
+\[\prescript{\emptyset}{}{\emptyset} = \{f \in P(\emptyset \times \emptyset): f: \emptyset \to \emptyset\} = \{\emptyset\}\]
+\[\prescript{\emptyset}{}{Y} = \{f \in P(\emptyset \times Y): f: \emptyset \to Y\} = \{\emptyset\}\]
+\[\prescript{Y}{}{\emptyset} = \{f \in P(Y \times \emptyset): f: Y \to \emptyset\} = \emptyset\]
+\end{ex}
+\begin{ex}
+Let $X = \{1, 2\}$ and let $Y = \{1, 2, 3\}$
+Calculate $\prescript{X}{}{Y}$ and its cardinality.
+\end{ex}
+\begin{axiom}[Axiom of Choice formulation 2]
+Let $I, Y$ be any set.
+Denote 
+\[\bigtimes_{i \in I} X_i = \{f: f \text{ is a function such that } \dom f = I \wedge \forall i\in I, f(i) \in X_i\}\]
+The axiom of choice states that for  $f: I \to Y$ such that $f(i) \neq \emptyset$ for all $i \in I$.
+\[\bigtimes_{i \in I} f(i) \neq \emptyset\]
+\end{axiom}

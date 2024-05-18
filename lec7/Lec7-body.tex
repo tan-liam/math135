@@ -1,0 +1,122 @@
+% !TEX root = Lec7.tex
+
+\section{Equivalence Relations}
+\begin{rem}
+The main topic for today is the notion of an equivalence relation. They are used to make sense of calling two things
+the same when they are not literally equal, for whatever intents and purposes in whatever particular case. Part of the
+goal of this lecture is to turn equivalence relative to an equivalence relation into literal equality through application
+of some function.
+
+\end{rem}
+\begin{defn}[Equivalence Relation]
+$E$ will be a relation. $E$ is an equivalence relation (on a set $X$) if
+\begin{enumerate}
+    \item $X = \fld(E)$.
+    \item $E$ is reflexive. i.e. $\forall a \in X, \la a, a\ra \in E$. Equivalently, $I_X \subseteq E$.
+    \item $E$ should be symmetric. i.e. $\forall a \forall b, \la a,  b\ra \in E \implies \la b, a \ra \in E$. Equivalently, $E^{-1} \subseteq E$.
+    \item $E$ is a transitive relation. i.e. $\forall a \forall b \forall c, \la a, b\ra \in E, \la b, c\ra \in E \implies \la a, c\ra \in E$. Equivalently, $E \circ E \subseteq E$.
+\end{enumerate}
+\end{defn}
+\begin{prop}
+A relation $R$ is transitive if and only if $R \circ R \subseteq R$.
+\end{prop}
+\begin{proof}
+Suppose $R \circ R \subseteq R$. Let $\la a, b\ra \in R$ and $\la b, c\ra \in R$. We know that by the definition
+of composition, $\la a, c\ra \in R \circ R \subseteq R$.\\
+$\impliedby$. Suppose $\la a, b\ra \in R$ and $\la b, c\ra \in R$. Then we know by transitivity of the relation that 
+$\la a, c\ra \in R$. Suppose $\la a, c\ra \in R \circ R$. Then there exists $a, b, c$ such that 
+$\la a, b\ra \in R$ and $\la b, c\ra \in R$. By transitivity, $\la a, c\ra \in R$.
+\end{proof}
+\begin{prop}
+A relation $R$ is reflexive iff $I_X \subseteq R$, where $X = \fld(R)$
+\end{prop}
+\begin{prop}
+A relation $R$ is symmetric iff $R^{-1} \subseteq R$ ($R^{-1} = R$)
+\end{prop}
+\begin{ex}
+$X$ is the set of formulas in some language.
+\[R = \{\la \psi, \varphi \ra: \psi \vdash \varphi\}\]
+This is reflexive and transitive, but not symmetric.
+\end{ex}
+\begin{ex}
+    Let $X$ be any set. 
+    \[R = I_X\]
+    This is an equivalence relation.
+\end{ex}
+\begin{ex}
+    Let $X = \Z$. Fix $n \in \Z_+$
+    \[E_n = \{\la a, b\ra \in \Z \times \Z: n | (a - b)\}\]
+    This is an equivalence relation. Feel free to do the computation to check.
+\end{ex}
+\begin{prop}
+Let $f: X \to Y$. 
+\[E_f = \{\la a, b\ra \in X \times X: f(a) = f(b)\}\]
+is an equivalence relation.
+\end{prop}
+\begin{proof}
+Consider $a \in X$. Then $f(a) = f(a)$, so $\la a, a\ra \in E_f$. Let $b \in X$ be such that $\la a, b\ra \in E_f$.
+Then $f(a) = f(b) \implies f(b) = f(a)$, so $\la b, a\ra \in E_f$. Finally, let $\la a, b\ra \in E_f$ and let $\la b, c\ra \in E_f$.
+Then $f(a) = f(b)$ and $f(b) = f(c)$, so $f(a) = f(c) \implies \la a, c\ra \in E_f$.
+\end{proof}
+\begin{ex}
+Consider the above example
+\[E_n = \{\la a, b\ra \in \Z \times \Z: n | (a - b)\}\]
+\[\text{rem}_n : \Z \to Z\]
+\[m \mapsto m \% n\]
+\[E_{\text{rem}_n} = E_n\]
+\end{ex}
+\begin{defn}[E-equivalence Class]
+The $E$-equivalence class of $x \in X$ is
+\[[x]_E = \{y \in X: \la x, y\ra \in E\}\]
+\end{defn}
+\begin{prop}
+We will construct $f: X \to \P(X)$ 
+\[f := \{t \in X \times \P(X): \exists x \exists A, x \in X, A \in \P(X), t = \la x, A\ra, A = \{y \in X: \la x, y \ra \in E\}\}\]
+Claim:
+\[E = E_f\]
+\end{prop}
+\begin{proof}
+Let $\la a, b\ra \in E$. Consider 
+\[f(a) = \{y \in X: \la a, y\ra \in E\}\]
+\[f(b) = \{y \in X: \la b, y\ra \in E\}\]
+Consider $y \in f(a)$. Then $\la a, y\ra \in E$. Since $\la a, b\ra \in E$, by symmetry we have that $\la b, a\ra \in E$. By 
+transitivity, $\la b, y\ra \in E$, so $y \in f(b)$. Thus $f(a) \subseteq f(b)$. By similar logic, we can show that $f(b)\subseteq f(a)$.
+Thus 
+\[f(a) = f(b) \implies \la a, b\ra \in E_f\]
+$\impliedby$ Let $\la a, b\ra \in E_f$. $f(a) = f(b)$. Let $y \in f(a)$. Then $\la a, y\ra \in E$. We also know that 
+$y \in f(b)$. Then $\la b, y\ra \in E$. By symmetry, $\la y, b\ra \in E$. Thus by transitivity, $\la a, b\ra \in E$.
+Thus $E_f \subseteq E$
+\end{proof}
+\begin{prop}
+\[\dom f = X\]
+\end{prop}
+\begin{proof}
+Let $x \in X$. $A = \{y \in X: \la x, y\ra \in E\}$. Then $\la x, A\ra \in t$. Thus 
+\[X \subseteq \dom f \subseteq X\]
+\end{proof}
+\begin{prop}
+    $f$ is a function
+    \end{prop}
+    \begin{proof}
+    Let $x \in X$. Consider $\la x, A\ra \in f$ and $\la x, B\ra \in f$. Then 
+    \[A = \{y \in X: \la x, y\ra \in E\}\]
+    \[B = \{z \in X: \la x, z\ra \in E\}\]
+    By extensionality, clearly $A = B$.
+    \end{proof}
+\begin{rem}
+We started with $E$, an equivalence relation on a set $X$ and constructed 
+\[f: X \to \P(X)\]
+\[a \mapsto \text{E-equivalence class of } a =  \{y \in X: \la a, y\ra \in E\}\]
+We showed that $E = E_f$. A question we might ask is what is the range of $f$?
+\end{rem}
+\begin{defn}[Quotients]
+\[X/E = \{A \in P(X): \exists a, a \in X, A = \{y \in X: \la a, y\ra \in E\}\}\]
+\[X/E = \ran f\]
+This is the set of $E$-equivalence classes.
+\end{defn}
+\begin{defn}[Canonical Mapping]
+We will change notation to 
+\[\pi_E: X \to X/E\]
+\[a \mapsto [a]_E = \{y \in X: \la a, y\ra \in E\}\]
+This is called the canonical mapping
+\end{defn}

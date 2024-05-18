@@ -1,0 +1,139 @@
+% !TEX root = Lec1.tex
+
+\section{Introduction to High-Dimensional Statistics}
+
+\subsection{Overview of the course}
+
+The first half of this course will cover theoretical tools used to establish theorems in high-dimensional statistics:
+\begin{itemize}
+\item Concentration inequalities
+
+\item Empirical process theory
+
+\item Gaussian process theory and random matrix theory
+\end{itemize}
+The second half of this course will cover statistical problems:
+\begin{itemize}
+\item Covariance estimation
+
+\item Sparse estimation problem
+
+\item Principal component analysis (PCA) in hihg dimension
+
+\item Non-parametric regression
+
+\item Minimax lower bounds
+\end{itemize}
+
+\subsection{A motivating example: sparse estimation}
+
+Here is a motivating example:
+
+\begin{ex}[High dimensional sparse estimation]
+Here is the assumption of our statistical model. We observe
+$$Y = \begin{bmatrix} Y_1 \\ \vdots \\ Y_n \end{bmatrix} \in \R^n, \qquad X = \begin{bmatrix} X_1^\top \\ \vdots \\ X_n^\top \end{bmatrix} \in \R^{n \times d}, \qquad X_i \in \R^d.$$
+We assume that the relationship $Y = X \theta^* + \omega$ holds, where $\theta^* \in \R^d$ with $\theta^* = \begin{bmatrix} \theta_1^* \\ \vdots \\ \theta_d^* \end{bmatrix}$ and $\omega \in \R^n$ is noise. In the high dimensional case, we have $n \ll d$, so standard linear regression will not be useful. 
+
+To deal with the problem in the high-dimensional case, we make the further assumption that $\theta^*$ is supported on $S \subseteq \{1,2,\dots d\}$, with $|S|$ denoted by $s$; that is, $\theta_i^*$ can be nonzero only on the indices in $S$. This is called an \textbf{$s$-sparse} assumption. Our task is that given $(Y,X)$, we want to estimate $\theta^*$.
+
+We present results without proof, although we will develop these results later in the course.
+
+\begin{enumerate}[label = (\alph*)]
+
+\item The naive estimator (assuming $\omega_i \overset{\on{iid}}{\sim} N(0,\sigma^2)$) is
+$$\wh \theta_{\on{LS}} := \argmin_{\theta \in \R^d} \frac{1}{2n} \| Y - X \theta \|_2^2.$$
+Classical theory tells us that
+\begin{align*}
+\E[\| \wh \theta_{\on{LS}} - \theta^*\|_2^2] &= \frac{\tr (X^\top X)^{-1}}{n} \sigma^2 \\
+&= \Theta \paren{\frac{d}{n} \sigma^2}
+\end{align*}
+If $n \ll d$, then $\E[\| \wh \theta_{\on{LS}} - \theta^* \|_2^2]  \gg 1$. This estimator, however does not use the assumption that $\theta^* \in \R^d$ is $s$-sparse.
+
+\item The LASSO estimator\footnote{LASSO comes from Tbshrani in 1994 and Chen, Donoho, and Saunders in 1994, as well.} is
+$$\wh \theta_{\on{LASSO}} := \argmin_{\theta \in \R^d} \frac{1}{2n} \| Y -X \theta \|_2^2 + \lambda_n \| \theta \|_1,$$
+which has an $L^1$ penalty. Our goal is to show that
+$$\| \wh \theta_{\on{LASSO}} - \theta^* \|_2 \ls c \sqrt{\frac{s \log d}{n}}.$$
+We need the following condition:
+
+\begin{defn}
+The matrix $X$ satisfies the \textbf{restricted eigenvalue (RE)}\footnote{This condition was introduced by Bickel, Ritov, and Tsybakov in 2009.} condition over $S$ with parameter $(\kappa,\alpha)$ if
+$$\underbrace{\frac{1}{n} \| X \Delta \|_2^2}_{= \frac{1}{n} \langle \Delta, X^\top X \Delta \rangle} \geq \kappa \| \Delta \|_2^2 \qquad \forall \Delta \in \C_\alpha(S) : = \{ \Delta \in \R^d : \| \Delta_{S^c} \|_1 \leq \alpha \| \Delta_S \|_1 \}.$$
+\end{defn}
+
+This is a geometric assumption on $\mc L(\theta) = \frac{1}{2n} \| Y - X(\theta_* + \Delta) \|_2^2$. If $X$ is $(\kappa,\alpha)$-RE, then $\mc L(\Delta)$ is strongly convex in the cone $\C_\alpha(S)$.
+
+\begin{thm}
+Suppose $\theta^*$ is supported on $S$, with $|S| = s$, and $X$ satisfies the RE condition over $S$ with parameter $(\kappa, 3)$. Further assume that $\lambda_n \geq 2 \| \frac{X^\top \omega}{n} \|_\infty$. Then
+$$\| \wh \theta_{\on{LASSO}} - \theta^* \|_2 \leq \frac{3}{\kappa} \sqrt s \lambda_n.$$
+\end{thm}
+
+What does this mean? The sparsity assumption is more natural; for example, if we are dealing with gene data in biology, we may assume that only a few genes will determine a trait. Let's now tackle a few questions about our assumptions:
+
+\begin{enumerate}[label = \arabic*.]
+
+\item When does RE hold?
+
+\item How large is $2 \| X^\top \omega \|_\infty/n$?
+
+\item How can we compare the bound with the least squares estimator?
+
+\end{enumerate}
+
+Make the assumption that $X_I \overset{\on{iid}}{\sim} N(0,\on{Id})$ (which can be generalized) and $\omega_i \overset{\on{iid}}{\sim} N(0,\sigma^2)$. Here are the answers to our questions:
+
+\begin{enumerate}[label = \arabic*.]
+
+\item
+\begin{prop}
+Suppose $(X_i)_{i \in [n]} \overset{\on{iid}}{\sim} N(0,\on{Id})$. Fix $S \subseteq [d]$ with $|S| = s$. Then there exist universal constants $0 < c_1 < 1 < c_2$ such that when $n \geq c_2 s \log d$, we have
+$$\P( \tfrac{1}{2n} \| X \Delta \|_2^2 \geq c_1 \| \Delta_2\|^2 \quad \forall \Delta \in \C_3(s)) \geq 1 - \frac{e^{-n/32}}{1- e^{-n/32}}.$$
+\end{prop}
+
+This tells us that the $(c_1,3)$--RE condition is satisfied with high probability (w.h.p.) as long as $n \geq s \log d$. To establish this proposition, we need to use empirical process theory and concentration inequalities.
+
+\item 
+
+\begin{lem}
+Suppose that $\max_{i \in [n]} \| x_i\|_2/\sqrt n \leq B_n$ and $\omega_i \overset{\on{iid}}{\sim} N(0,\sigma^2)$. Then there is a universal constant $c$ such that for all $t > 0$,
+$$\P\paren{\frac{\| X^\top \omega \|_\infty}{n} \leq c B_n \sigma \paren{\sqrt{\frac{2 \log d}{n}} + t}} \geq 1 - 2 e^{-nt^2/2}$$
+Moreover, when $X_i \sim N(0,\on{Id})$, then for all $t \in (0,1)$,
+$$\P \paren{\max_{i \in [n]} \frac{\| X_i \|_2^2}{n} \leq 1 + t} \geq 1 - n e^{- n t^2/8}.$$
+\end{lem}
+This lemma tells us that
+$$\frac{2 \| X^\top \omega \|_\infty}{n} \leq \underbrace{\wt C \sigma \sqrt{\frac{\log (d/\delta)}{n}}}_{\lambda_n}$$
+with probability at least $1-2\delta$. To establish this lemma, we need concentration inequalities and empirical process theory.
+
+\item Plug in $\lambda = \wt C \sigma  \sqrt{\frac{\log (d/\delta)}{n}}$ to get
+$$\| \wh \theta_{\on{LASSO}} - \theta^* \|_2 \leq \frac{3}{\kappa} \sqrt s \lambda_n = \frac{3}{\kappa} \wt C \sigma \sqrt{\frac{s \log (d/\delta)}{n}}$$
+with probability at least $1 - 3\delta$. This means that as long as $n \gtrsim s \log(d/\delta)$,
+$$\| \wh \theta_{\on{LASSO}} - \theta^*\|_2^2 \ll 1.$$
+In comparison, $\E[ \| \wh \theta_{\on{LS}} - \theta^* \|_2^2] = \Theta(\frac{d}{n} \sigma^2)$, which needs $n \geq d$ to be small.
+
+\end{enumerate}
+\end{enumerate}
+\end{ex}
+
+\subsection{Relationships with other statistical topics}
+
+Here are the relationships between this course and other courses:
+
+\begin{itemize}
+
+\item Stat 210A Theoretical Statistics: In statistical decision theory, we have a statistical model $\mc P = \{ P_\theta : \theta \in \Theta\}$ with a statistical procedure $\delta : D \to \Theta$ and a loss function $|ell : \Theta \times \Theta \to \R$. We can then calculate the risk function $R(\theta;\delta) = \E_\theta[\ell(\theta; \delta(Z))]$. We can compare risk functions for different procedures by looking at summarized statistics of the risk function:
+
+\begin{itemize}
+
+\item Bayes risk: We assume $\theta \sim \pi$, so $R_B(\pi;\delta) = \E_{\theta \sim \pi}[R(\theta;\delta)]$.
+
+\item Minimax: We can look at $R_M(\Theta;\delta) = \sup_{\theta \in \Theta} R(\theta; \delta)$.
+
+\end{itemize}
+In our example, LASSO is approximately minimax optimal
+
+\item CS 281A/Stat 241A Statistical learning theory: This focuses on a different (but related) collection of models (empriical risk minimization). We study them using a similar set of tools (concentration inequalities, empirical process theory).
+
+\item Stat 260 Mean field asymptotics in statistical learning: Here, we focus on the same collections of statistical models but study them in another regime ($n,d \to \infty$ with $n/d \to \on{constant}$ asymptotics). We use different collection of tools (statistical physics, AMP, Gaussian comparison). This needs stronger assumptions but gives more refined results.
+
+\end{itemize}
+
+Other useful courses are convex optimization and information theory. These courses are important in order to learn deep learning theory and reinforcement learning theory. In the next lecture, we will start learning about concentration inequalities.

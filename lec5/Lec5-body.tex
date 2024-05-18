@@ -1,0 +1,129 @@
+% !TEX root = Lec5.tex
+
+\section{More on Relations and Functions}
+\begin{ex}[Function Example]
+\[F: \R \to \R\]
+\[x \mapsto x^2\]
+\[F = \{t \in \R \times \R: \exists x, x \in R, t = \la x, x^2\ra \}\]
+\[\ran F = \{x \in \R : x \geq 0\}\]
+\end{ex}
+Let $R, S, A$ be sets.
+\begin{defn}[Converse Relation]
+\[R^{-1} := \{t \in \ran R \times \dom R: \exists a \exists b \exists t, t = \la b, a\ra, \la a, b\ra \in R\}\]
+Essentially, in our (relation) set, we swap every pair of ordered pairs. This should be like an inverse, with the operation of composition.
+\end{defn}
+\begin{defn}[Composition of relations]
+    \[R \circ S := \{\la a, c\ra: \exists \la a, b\ra \in S, \exists \la b, c\ra \in R\}\]
+    \[R \circ S := \{t \in \dom S \times \ran R: \exists a \exists b \exists c, t = \la a, c\ra, \la a, b\ra \in S, \la b, c\ra \in R\}\]
+    We want this to work similarly to how we think of function composition.
+\end{defn}
+\begin{prop}
+If $F, G$ are functions, then so is $F \circ G$. 
+\end{prop}
+\begin{proof}
+Every composition is a relation by definition, so $F \circ G$ is a relation. Let $\la a, b\ra \in F \circ G$. Similarly,
+let $\la a, c\ra \in F \circ G$. Unraveling the definitions gives us the existence of some $d, e$ such that $\la a, d\ra \in G$
+and $\la d, b\ra \in F$, as well as $\la a, e\ra \in G$, and $\la e, d\ra \in F$. Since $G $ is a function,  $d = e$. Thus $\la d, b\ra \in F$ and 
+$\la e, c\ra = \la d, c\ra \in F$. Since $F$ is a function, we have that $b = c$. This concludes the proof.
+\end{proof}
+\begin{rem}
+[What is $\dom (F \circ G)$?]
+\[\dom (F \circ G) = \{t \in \dom G: \exists c, \la t, c\ra \in F \circ G\}\]
+\[\dom (F \circ G) = \{t \in \dom G: \exists b \exists c, \la t, b\ra \in G \wedge \la b, c\ra \in F\}\]
+\end{rem}
+\begin{defn}[Relation/Function Restriction]
+If we want to restrict $R$ to $A$, we denote this as $R \uhr A$
+\[R \uhr A = \{t \in R: \exists a \exists b, a \in A, t = \la a, b\ra, t \in R\}\]
+We just want to make sure the first coordinate comes from $A$.
+\end{defn}
+\begin{defn}[Image of a function/relation]
+The image of $A$ under $R$ is denoted as
+\[R \llb A\rrb = \ran (R \uhr A)\]
+\end{defn}
+\begin{defn}[Function Application]
+\[f(a) = b \iff f \text{ is a function} \wedge \la a, b\ra \in f\]
+\end{defn}
+\begin{rem}
+We reserve the parentheses notation only for the latter notation. If we wrote
+$R(A)$, this would indicate that the set $A$ is an element of the domain of $R$.
+In the bracket notation, we want to think of $A$ as a subset of the domain of $R$. This 
+extends the way we think about a function to something on the powerset.
+\end{rem}
+\begin{defn}[Preimage]
+    We take a look everything in some set which might be in the codomain and we look at every
+    set which maps to this set. The preimage of a set $A$ under R is
+    \[\{t: a \in A \wedge \la t, a\ra \in R\}\]
+    We can formally write this as 
+    \[R^{-1}\llb A\rrb\]
+\end{defn}
+\begin{prop}
+\[\dom R \uhr A = (\dom R) \cap A\]
+\end{prop}
+\begin{prop}
+\[\dom(R \circ S) = S^{-1}\llb \dom R\rrb\]
+\end{prop}
+\begin{proof}
+\[a \in \dom (R \circ S) \iff\]
+\[\exists c, \la a, c\ra \in R \circ S \iff\]
+\[\exists b, \la a , b\ra \in S \wedge \la b, c\ra \in R \iff\]
+\[\exists b, b \in \dom R, \la b, a\ra \in S^{-1} \iff\]
+\[a \in S^{-1}\llb \dom R\rrb\]
+\end{proof}
+\begin{rem}
+We keep using the inverse notation, but the inverse doesn't mean much without
+an identity. So what is the identity supposed to do? It should take any element $x \in X$ and return $x$.
+\end{rem}
+\begin{defn}[Identity Function]
+For any set $X$,
+\[I_X = \{t \in X \times X: \exists x, x \in X, t = \la x, x\ra\}\]
+\end{defn}
+\begin{ex}[Identity Function on the Empty Set]
+\[I_\emptyset = \emptyset\]
+\[\dom \emptyset = \ran \emptyset = \emptyset\]
+\[\emptyset^{-1} = \emptyset\]
+\end{ex}
+\begin{prop}[Composition of relation and its converse]
+What will $R^{-1}\circ R$ be? Will it be $I_{\dom R}$?
+We know $I_{\dom R} \subseteq R^{-1}\circ R$
+\end{prop}
+\begin{proof}
+\[t \in I_{\dom R} \iff\]
+\[\exists b, b \in \dom R \wedge t = \la b, b\ra\]
+Since $\exists a$ such  that $\la b, a\ra \in R$ and $\la b, a\ra \in R^{-1}$.
+Then by definition, $\la b, b\ra \in R^{-1} \circ R$.
+\end{proof}
+\begin{ex}[$I_{\dom R} \neq R^{-1} \circ R$]
+Let $X$ be any set with at least two elements. For example,
+\[X = \{\emptyset, \{\emptyset\}\}\]
+Consider the function $F = X \times \{b\}$. Computing the converse yields
+$F^{-1} = \{b\} \times X$.
+\[F^{-1} \circ F = \{\la x, z\ra: \la x, y\ra \in F, \la y, z\ra \in F^{-1}\} = X \times X\]
+\end{ex}
+\begin{defn}[Single Rooted Relations]
+A relation $R$ is called single rooted iff 
+\[\forall a \forall b \forall c[\la a, c\ra \in R \wedge \la b, c\ra \in R \implies a = b]\]
+\end{defn}
+\begin{rem}
+A relation $R$ is single rooted $\iff$ $R^{-1}$ is a function
+\end{rem}
+\begin{defn}[Injective]
+A function $F$ is injective if $F$ is single-rooted. We also call injective functions one-to-one.
+\end{defn}
+\begin{prop}
+If $R$ is a single-rooted relation, then 
+\[R^{-1} \circ R = I_{\dom R}\]
+\end{prop}
+\begin{proof}
+Suppose $\la a, c\ra \in R^{-1}\circ R$. Then there exists $c$ such that
+$\la a, b\ra \in R$ and $\la b, c\ra \in R^{-1}$. If $\la b, c\ra \in R^{-1}$,
+it follows that $\la c, b\ra \in R$. By the definition of single-rooted, $a = c$. Thus
+$\la a, c\ra = \la a, a\ra \in I_{\dom R}$. We proved the other inclusion above.
+\end{proof}
+\begin{thm}[1-1 Functions]
+    Let $F: X \to Y$ be a function. Then TFAE
+    \begin{itemize}
+        \item F is one-to-one
+        \item $\exists g, g: Z \to X \wedge g \circ F = I_X$
+        \item $F^{-1}$ is a function and $F^{-1}\circ F = I_X$
+    \end{itemize}
+\end{thm}

@@ -1,0 +1,28 @@
+# Ignore log files
+*.log
+
+# Ignore output files
+*.out
+
+# Ignore auxiliary LaTeX files
+*.aux
+*.bbl
+*.blg
+*.brf
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.toc
+*.lof
+*.lot
+*.nav
+*.snm
+
+# Ignore any other temporary or unnecessary files
+*~
+*.backup
+
+# Don't ignore PDF, TEX, and STY files
+!*.pdf
+!*.tex
+!*.sty

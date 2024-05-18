@@ -1,0 +1,113 @@
+% !TEX root = Lec2.tex
+
+\section{Introduction to the Theory of Sets}
+
+We will formalize set theory and prove theorems based on the constructions from the axioms. The theory we will be developing is called ZFC (Zermelo-Fraenkel Set Theory with Choice). ZFC is a first-order logical theory expressed in the language of set theory called \[\mathscr{L}(\epsilon)\]
+$\epsilon$ is the only non-logical symbol, called a binary relation, "$a \in b$".
+\\\\
+Where $a$ and $b$ are variables, we can combine atomic formula, logical formula, and quantifiers to form our language. Atomic formula include $a = b$ and $a \in b$. Logical formula include $a \implies b$, $\neg a$, $a \wedge b$, $a \vee b$, $a \iff b$. Quantifiers are $\exists x \varphi$ and $\forall x \varphi$.
+\\\\
+An $\mathscr{L}(\epsilon)$-structure is a nonempty set V together with a set $\epsilon \subset V \times V$. For $a, b \in V$
+\[(V, \epsilon^V) \models a \in b \iff (a, b) \in \epsilon^V\]
+\begin{ex}[The universe of sets]
+\[(\mathbb{V}, \epsilon)\]
+\end{ex}
+\begin{thm} [ZFC cannot prove that there is a model of ZFC] i.e. a set V and a set $\epsilon^V \subseteq V \times V$ s.t every axiom of ZFC is true.
+\end{thm}
+\begin{thm}[Godel's Incompleteness Theorem for ZFC] If ZFC can prove that ZFC is consistent then ZFC is inconsistent 
+\end{thm}
+\subsection{Introducing the Axioms}
+\begin{axiom}
+    [Axiom of Extensionality] This axiom defines what it means for two sets to be the same. The equality operator is taken to be primitive in first-order logic and we need to define how it relates to the other symbols.
+    \[\forall A \forall B [A = B \iff \forall t [t \in A \iff t \in B]]\]
+\end{axiom}
+\begin{ex}[An example of a structure]
+\[V = \{0, 1\}\]
+\[\epsilon^V = \{(0,0), (0, 1)\}\]
+\[V \models 0 \in 1\]
+\[V \models 0 \in 0\]
+$(V, \epsilon^V) \not\models$ the axiom of extensionality.
+\[V \models \neg(0 = 1)\]
+but 
+\[V \models \forall t [t \in 0 \iff t \in 1]\]
+\end{ex}
+\begin{axiom}
+    [Empty Set Axiom] There exists an empty set.
+    \[\exists x \forall t \neg[t \in x]\]
+    We can abbreviate this with the following
+    \[\exists x \forall t (t \notin x)\]
+\end{axiom}
+\begin{defn}[Defining the $\notin$ symbol]
+    We want to define formula that aren't strictly part of our language. Let us define the negation of the set membership.
+    \[\Delta_{\notin}: \forall x \forall y [x \notin y \iff \neg(x \in y)] \in \mathscr{L}(\epsilon, \not\epsilon)\]
+\end{defn}
+\begin{prop}
+    For any $\mathscr{L}(\epsilon)$ structure $(M, \epsilon^M)$, there is unique expansion $(M, \epsilon^M, \not\epsilon^M) \models \Delta_{\notin}$
+\end{prop}
+\begin{rem}[Introducing Symbols] We will want to introduce many new symbols throughout the course of this class. e.g. $\subseteq, \mathcal{P} \mathbb{A}$. We will need to define new symbols logically each time we introduce them and can do so hierarchically with previously defined symbols.
+\end{rem}
+\begin{ex}[A structure consistent with the Axioms]
+\[V = \{0\}\]
+\[\epsilon^V = \emptyset\]
+$(V, \epsilon^V) \models $ Empty Set and Extensionality Axioms
+\end{ex}
+\begin{prop}[Uniqueness of the Empty Set]
+There is exactly one empty set.
+\end{prop}
+\begin{proof}
+By the Empty Set Axiom, there is at least one empty set. If $x$ and $y$ are two empty sets. i.e. $(\forall t) t \notin x$ and $(\forall t) t \notin y$, then $\forall t (t \in x \iff t \in y)$. By the Axiom of Extensionality, $x = y$
+\end{proof}
+\begin{defn}[Empty Set Formula]
+\[\Delta_\emptyset : \forall x [x = \emptyset \iff \forall t (t \notin x)] \in \mathscr{L}(\epsilon, \not\epsilon, \emptyset)\]
+where the $\epsilon$ and $\not\epsilon$ are binary relation symbols and the $\emptyset$ symbol is called a constant symbol.
+\end{defn}
+\begin{defn}[Subset Formula]
+\[\Delta_{\subseteq}: \forall x \forall y [x \subseteq y \iff \forall t [t \in x \implies t \in y]]\]
+\end{defn}
+\begin{axiom}[Power Set Axiom]
+\[\forall x \exists z \forall t [t \in z \iff t \subseteq x]\]    
+\end{axiom}
+\begin{prop}[Uniqueness of the Power Set]
+    $\forall x$ there is a unique power set of $x$
+\end{prop}
+\begin{defn}[Power Set Operation]
+\[\Delta_{\mathcal{P}}: \forall x \forall z [z = \mathcal{P}x \iff \forall t [t \in z \iff t \subseteq x]]\]
+$\mathcal{P}$ is a unary function symbol.
+\end{defn}
+\begin{ex}[What Sets can we build so far]
+$\emptyset, \mathcal{P}(\emptyset)= \{\emptyset\}, \mathcal{P}\mathcal{P}\emptyset = \{\emptyset, \{\emptyset\}\}$, etc
+We can keep iterating powersets. We will need to add more axioms. For example, we cannot prove the existence of  $\{\{\emptyset\}\}$ with the axioms we have so far.
+\end{ex}
+\begin{axiom}[Pair Set Axiom]
+\[\forall x\forall y \exists z \forall t [t \in z \iff (t = x \vee t= y)]\]
+\end{axiom}
+\begin{defn}[Pair Set Operation]
+\[\Delta_{\{,\}}: \forall x \forall t \forall z [z = \{x, y\} \iff \forall t [t \in z \iff t = z \vee t = y]] \]    
+\end{defn}
+\begin{ex}[Singleton Set]
+\[x = y\]
+\[\{x, y\} = \{x, x\} = \{x\}\]
+\end{ex}
+\begin{prop}[Existence of the Singleton]
+\[\forall x \exists z \forall t [t \in z \iff t = x]\]
+\end{prop}
+\begin{proof}
+We can apply the Pair Set Axiom with $y = x$
+\end{proof}
+\begin{defn}[Singleton Operation]
+\[\Delta_{\{\}} = \forall x \forall y [z = \{x\} \iff \forall t [t \in z \iff t = x]]\]
+\end{defn}
+\begin{ex}[Triplet Set]
+Can we create a set with three items? We can attempt to apply the pair set axiom to $\{
+a\}$ and $\{b, c\}$, but unfortunately we will end up with $\{\{a\}, \{b, c\}\}$. We will need to define the union.
+\end{ex}
+\begin{axiom}[Binary Union Axiom (Not ZFC)]
+\[\forall x \forall y \exists z \forall t [t \in z \iff (t \in x \vee t \in y)]\]
+\end{axiom}
+\begin{defn}[Binary Union Operation]
+\[\Delta_\cup : \forall x \forall y \forall z [z = x \cup y \iff \forall t [t \in z \iff (t \in x \vee t \in y)]]\]
+\end{defn}
+\begin{ex}[Triplet Set Reprise]
+Now with the binary union axiom, we can apply the operation to $\{a\}$ and $\{b, c\}$, which were found by the pair set axiom. Using the Binary Union Axiom, 
+\[\{a\} \cup \{b, c\} = \{a, b, c\}\]
+\end{ex}

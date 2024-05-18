@@ -1,0 +1,174 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{pillowmath}
+
+\usepackage{amsmath,amsfonts,amsthm,amssymb,mathrsfs,mathtools,enumitem,stmaryrd,bbm,youngtab,ytableau,tikz-cd,cancel,textcomp,mathdots,setspace,algorithm,algorithmicx,algpseudocode}
+%\usepackage{makeidx}
+\usetikzlibrary{arrows, automata, positioning, trees, matrix, calc}
+ 
+%\RequirePackage{amsmath}
+%\RequirePackage{amssymb}
+%\RequirePackage{amsthm}
+%\RequirePackage{mathtools}
+
+% Common Sets
+
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\F}{\mathbb{F}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\K}{\mathbb{K}}
+\newcommand{\A}{\mathbb{A}}
+\renewcommand{\P}{\mathcal{P}}
+\newcommand{\CG}{\mathbb{C}G}
+\newcommand{\CX}{\mathbb{C}X}
+\newcommand{\la}{\langle}
+\newcommand{\ra}{\rangle}
+\newcommand{\dom}{\text{dom}}
+\newcommand{\ran}{\text{ran}}
+\newcommand{\fld}{\text{fld}}
+\newcommand{\uhr}{\upharpoonright}
+\newcommand{\llb}{\llbracket}
+\newcommand{\rrb}{\rrbracket}
+
+% Fonts
+
+\newcommand\bs[1]{\boldsymbol{#1}}
+\newcommand\mb[1]{\mathbf{#1}}
+\newcommand\mbb[1]{\mathbb{#1}}
+\newcommand\mbbm[1]{\mathbbm{#1}}
+\newcommand\mc[1]{\mathcal{#1}}
+\newcommand\mf[1]{\mathfrak{#1}}
+\newcommand\ms[1]{\mathscr{#1}}
+\newcommand\mss[1]{\mathsf{#1}}
+\newcommand\msf[1]{\mathsf{#1}}
+\newcommand\on[1]{\operatorname{#1}}
+
+% Separators
+
+\newcommand{\abs}[1]{\left| #1 \right|}
+\newcommand{\norm}[1]{\left \lVert #1 \right \rVert}
+\newcommand{\paren}[1]{\left( #1 \right)}
+\newcommand{\squa}[1]{\left[ #1 \right]}
+\newcommand{\ssqua}[1]{\left \llbracket #1 \right \rrbracket}
+\newcommand{\brac}[1]{\left\{ #1 \right\}}
+\newcommand{\angl}[1]{\left \langle #1 \right \rangle}
+\newcommand{\ket}[1]{\left | #1 \right \rangle}
+\newcommand{\bra}[1]{\left \langle #1 \right |}
+
+\newcommand{\vertiii}[1]{{\left\vert\kern-0.25ex\left\vert\kern-0.25ex\left\vert #1 
+    \right\vert\kern-0.25ex\right\vert\kern-0.25ex\right\vert}}
+
+% Environment shortcuts
+
+\newcommand{\mat}[2]{\begin{bmatrix} #1 \\ #2 \end{bmatrix}}
+\newcommand{\matt}[4]{\begin{bmatrix} #1 & #2 \\ #3 & #4 \end{bmatrix}}
+
+% Functions
+
+\DeclareMathOperator\Arg{Arg}
+\DeclareMathOperator\Ber{Bernoulli}
+\DeclareMathOperator\E{\mathbb{E}}
+\DeclareMathOperator\Exp{Exponential}
+\DeclareMathOperator\Geom{Geometric}
+\DeclareMathOperator\Hom{Hom}
+\DeclareMathOperator\Gal{Gal}
+\DeclareMathOperator\End{End}
+\DeclareMathOperator\Aut{Aut}
+\DeclareMathOperator\Tor{Tor}
+\DeclareMathOperator\Ext{Ext}
+\DeclareMathOperator\Spec{Spec}
+\DeclareMathOperator\Hol{Hol}
+\DeclareMathOperator\Sym{Sym}
+\DeclareMathOperator\GL{GL}
+\DeclareMathOperator\SL{SL}
+\DeclareMathOperator\PSL{PSL}
+\DeclareMathOperator\PGL{PGL}
+\DeclareMathOperator\MAP{MAP}
+\DeclareMathOperator\MLE{MLE}
+\DeclareMathOperator\colim{colim}
+\DeclareMathOperator\coker{coker}
+\DeclareMathOperator\Pois{Poisson}
+\DeclareMathOperator\PowerSet{\msf{PowerSet}}
+\DeclareMathOperator\adj{adj}
+\DeclareMathOperator\card{card}
+\DeclareMathOperator\cov{cov}
+\DeclareMathOperator\loc{loc}
+\DeclareMathOperator\diag{diag}
+\DeclareMathOperator\diam{diam}
+\DeclareMathOperator\id{id}
+\DeclareMathOperator\nullity{nullity}
+\DeclareMathOperator\nul{nul}
+\DeclareMathOperator\nullspace{nullspace}
+\DeclareMathOperator\one{\mathbbm{1}}
+\DeclareMathOperator\range{range}
+\DeclareMathOperator\rank{rank}
+\DeclareMathOperator\rk{rk}
+\DeclareMathOperator\sgn{sgn}
+\DeclareMathOperator\spn{span}
+\DeclareMathOperator\supp{supp}
+\DeclareMathOperator\tr{tr}
+\DeclareMathOperator\codim{codim}
+\DeclareMathOperator\Var{Var}
+\DeclareMathOperator\Cov{Cov}
+\DeclareMathOperator\var{var}
+\DeclareMathOperator\eq{eq}
+\DeclareMathOperator\coeq{coeq}
+\DeclareMathOperator\ind{ind}
+\DeclareMathOperator\sign{sign}
+\DeclareMathOperator\dist{dist}
+\DeclareMathOperator\weak{weak}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\newcommand{\CRing}{\mb{CRing}}
+\newcommand{\Grp}{\mb{Grp}}
+\newcommand{\Ring}{\mb{Ring}}
+\newcommand{\leg}[2]{\pmb{\Big(} \frac{#1}{#2} \pmb{\Big)} \Big.}
+\renewcommand{\Pr}{\mathbb{P}}
+\renewcommand{\Re}{\operatorname{Re}}
+\newcommand{\acts}{\circlearrowright}
+\newcommand{\im}{\on{im}}
+\newcommand{\coim}{\on{coim}}
+\newcommand{\nor}{\trianglelefteq}
+\newcommand{\dlim}{\varinjlim}
+\newcommand{\ilim}{\varprojlim}
+\newcommand{\sdif}{\triangle}
+\newcommand{\ba}[1]{\overline{#1}}
+\newcommand{\mult}[2]{\angl{\genfrac{}{}{0pt}{}{#1}{#2}}}
+\newcommand{\wt}{\widetilde}
+\newcommand{\wh}{\widehat}
+\newcommand{\ls}{\lesssim}
+
+% Calculus
+
+\newcommand{\D}{\mathrm{d}}
+
+% Environments
+
+\newtheorem{thm}{Theorem}[section]
+\newcommand\thmautorefname{Theorem}
+\newtheorem{axiom}{Axiom}[section]
+\newcommand\axiomautorefname{Axiom}
+\newtheorem{lem}{Lemma}[section]
+\newcommand\lemautorefname{Lemma}
+\newtheorem{prop}{Proposition}[section]
+\newcommand\propautorefname{Proposition}
+\newtheorem{cor}{Corollary}[section]
+\newcommand\corautorefname{Corollary}
+\newtheorem{conj}{Conjecture}[section]
+\newcommand\conjautorefname{Conjecture}
+\newtheorem{prob}{Problem}[section]
+\newcommand\probautorefname{Problem}
+
+\theoremstyle{definition}
+\newtheorem{defn}{Definition}[section]
+\newcommand\defnautorefname{Definition}
+\newtheorem{ex}{Example}[section]
+\newcommand\exautorefname{Example}
+\newtheorem{rem}{Remark}[section]
+\newcommand\remnautorefname{Remark}
+\newtheorem{war}{Warning}[section]
+\newcommand\warnautorefname{Warning}
+\newtheorem{exe}{Exercise}[section]
+\newcommand\exenautorefname{Exercise}

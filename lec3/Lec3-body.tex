@@ -1,0 +1,107 @@
+% !TEX root = Lec3.tex
+
+\section{More Basic Axioms of ZFC and Common Operations}
+\subsection{More Basic Axioms}
+We will provide two more axioms today, the Subset Axiom and Union Axiom. These will allow us to carry out many of the basic operations of set theory that we know and love. Eventually these axioms will be too primitive to express the kinds of sets we will like to work with and we will add three more axioms, the Axiom of Infinity, the Replacement Axiom, and the Axiom of Regularity.
+\begin{rem}
+We would like it to be the case such that for any property $P(-)$ of sets, expressible in $\mathscr{L}(\epsilon)$
+\[A := \{t: P \text{ is true of t}\}\]
+However if we can construct this, we can also construct
+\[B := \{t: P \text{ is not true of t}\}\]
+If we take the binary union, we can construct the set of all sets
+\[\mathbb{V} := A \cup B\]
+We will discuss why this creates an inconsistency in a moment. Instead of forming the set of all sets with some property, we can form the set of all sets that are elements of some given set, which have some property.
+\end{rem}
+\begin{rem}[Informal Subset Axiom (Schema)]
+Informally, for any set $X$ and any property $P(t)$, expressible in $\mathscr{L}(\epsilon)$ there is a set $Y = \{t: t \in X \wedge P \text{ is true of }t\}$
+\end{rem}
+\begin{rem}[Formulas]
+How do we construct formulas? We start with the atomic formula, e.g. $z_1 = z_3$, $z_1 \in z_2$. We build up the general formula by applying boolean operations like $\wedge$, $\vee$, $\iff$, $\neg$, $\implies$ and quantification $\exists$ and $\forall$.
+\end{rem}
+\begin{rem}[Free Variables]
+Let us begin with an example
+\[\varphi = \exists z (x \in y \wedge z = y)\]
+In this formula, $x$ and $y$ are free. $z$ is a bound variable, since it is attached to a quantifier. Free variables can actually be plugged into the formula to evaluate the statement. Bound variables are part of the formula.
+\[\varphi(x=\{\emptyset\}, y=\{\{\emptyset\}\})\]
+This is a true statement. $z = \{\{\emptyset\}\}$ satisfies the formula. Consider the following example
+\[x \in x \wedge \exists (x = x)\]
+$x$ is both free and bound, since it is free in some instances and bound in other instances.
+\end{rem}
+\begin{axiom}[Subset Axiom (Schema)]
+For each formula $\varphi(t, z_1, \cdots, z_n)$ with free variables amongst $t, z_1, \cdots, z_n$ in $\mathscr{L}(\epsilon)$
+\[\forall z_1, \cdots \forall z_n, \forall x \exists y \forall t [t \in y \iff \varphi(t, z_1, \cdots, z_n) \wedge t \in x]]\]
+\end{axiom}
+\begin{ex}[Intersection of Sets]
+$\varphi(t, z_1) : t \in z_1$. Let $A$ and $B$ be two sets. By the subset axiom
+\[\exists y \forall t[t \in y \iff (t \in A \wedge t \in B)\]
+Thus $y = A \cap B$, so the intersection exists.
+\end{ex}
+\begin{defn}[Subset Function]
+We have $(z_1, \cdots, z_n, x) \mapsto \{t \in x: \varphi(t, z_1, \cdots, z_n)\}$  
+\[\Delta_{: \varphi}: \forall z_1, \cdots, \forall z_n \forall x \forall y[y = \{t \in x: \varphi(t, z_1, \cdots, z_n\} \iff \forall t [t \in y \iff (t \in x \wedge \varphi(t, z_1, \cdots, z_n))]]\]
+\end{defn}
+\begin{prop}[There is no set $\mathbb{V}$ of all sets]
+Suppose $\mathbb{V}$ was a set. Then $\forall t (t \in \mathbb{V})$. We can construct, using the subset axiom, the following.
+\[R = \{t : t \notin t\}\]
+This is called the Russell Set. We have that $R \in R \iff R \notin R$. Thus no set $\mathbb{V}$ of all sets can exist.
+\end{prop}
+\begin{prop}[No universal complement can exist]
+Let the universal complement of $\{a\}$, where a is a set, exist. 
+\[x = \{t : t \neq a\}\]
+Using the b inary union axiom, we can construct $\mathbb{V}$ in the following manner
+\[x \cup \{a\} = \mathbb{V}\]
+Since such a set cannot exist, we have a contradiction and no universal complement can exist. 
+\end{prop}
+\begin{rem}[On the usage of the Subset Axiom and the Russell Set]
+Anytime we use set comprehension, we are invoking the Subset Axiom and in doing so we must indicate the parent set from which we are drawing from. Unrestricted comprehension can lead to trouble with the set of all sets. In addition, many of the proofs you will see about whether a particular "universal" set exists will reduce to the construction of the set of all sets. Such a reduction can be useful to keep in your toolbox.
+\end{rem}
+\begin{ex}[Infinite Unions]
+\[\bigcup_{n=1}^\infty (\frac{1}{n}, 1) = (0,1)\]
+We generalize this to any sequence of sets.
+\[t \in \bigcup_{n=1}^\infty A_n \iff \exists n (t \in A_n)\]
+Further generalizing, we can index by sets instead of the natural numbers.
+\[t \in \bigcup_{i \in I} A_i \iff \exists i (i \in I \wedge t \in A_i)\]
+\end{ex}
+\begin{axiom}[Union Axiom]
+\[\forall x\exists y \forall t [t \in Y \iff \exists z (z \in x \wedge t \in z)]\]
+\end{axiom}
+\begin{cor}[Binary Union Axiom follows from Union Axiom + Pair Set Axiom]
+\[A \cup B = \bigcup\{A, B 
+\}\]
+\[t \in A \cup B \iff t \in A \vee t \in B \iff \exists z [t \in Z \wedge z \in \{A, B\}] \iff t \in \bigcup\{A, B\}\]
+We can construct the binary union operation by using the Union Axiom and the Pair Set Axiom.
+\end{cor}
+\textbf{Which axioms do we have so far?}
+\begin{itemize}
+    \item Extensionality
+    \item Pairing
+    \item Power Set
+    \item Empty Set
+    \item Subset Axiom Schema
+    \item Union 
+\end{itemize}
+
+\subsection{The Algebra of Sets}
+Fix $X$. Consider $A, B \subseteq X$
+\[A \cup B \subseteq X\]
+\[A \cap B \subseteq X\]
+\[X \setminus A = A^c = \{t \in X: t \notin A\}\]
+We can express all of these operations given the axioms
+\begin{prop}[$A \cap (B \cup C) = (A \cap B) \cup (A \cap C)$]
+\end{prop}
+\begin{proof}
+$\forall t (t \in A \cap (B \cup C))$ 
+\\$ \iff t \in A \wedge t \in B \cup C $
+\\$\iff t \in A \and (t \in B \vee t \in C)$
+\\$ \iff (t \in A \wedge t \in B) \vee (t \in A \wedge t \in C) $
+\\$\iff t \in A \cap B \vee t \in A \cap C $\\
+$\iff t \in (A \cap B) \cup (t \in A \cap C)$
+\end{proof}
+More algebraic facts
+\[X \setminus (A \cap B) = (X \setminus A) \cup (X \setminus B)\]
+\[A \cap (B \cap C) = (A \cap B) \cap C\]
+\[A \cup (B \cap C) = (A \cup B) \cap (A \cup C)\]
+\[A \cup \emptyset = A\]
+\[A \cap \emptyset = \emptyset\]
+\[A \cap X = A\]
+\[(\mathcal{P}(X), \cap, \cup, X \setminus, \emptyset, X)\]
